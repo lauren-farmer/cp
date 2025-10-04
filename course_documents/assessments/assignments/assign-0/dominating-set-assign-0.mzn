@@ -20,7 +20,7 @@ constraint
     );
 
 % Objective: minimize size of dominating set
-solve :: int_search(decision, first_fail, indomain_min, complete) minimize sum(decision);
+solve :: int_search(decision, input_order, indomain_min, complete) minimize sum(decision);
 
 % Output in the exact format the marking script expects
 output ["decision = \(decision);\n"];
