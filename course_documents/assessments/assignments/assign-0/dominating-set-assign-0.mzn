@@ -9,18 +9,17 @@ array[1..n] of var 0..1: decision;
 
 % A vertex v is dominated if it is in the set or one of its neighbors is
 predicate dominates(int: v) =
+    
+
+% Each vertex must be dominated
+constraint forall(v in 1..n)(
     decision[v] = 1
     \/ exists(e in 1..m where from[e] = v)(decision[to[e]] = 1)
     \/ exists(e in 1..m where to[e] = v)(decision[from[e]] = 1);
-
-% Each vertex must be dominated
-constraint
-    forall(v in 1..n)(
-        dominates(v)
     );
 
 % Objective: minimize size of dominating set
-solve :: int_search(decision, input_order, indomain_min, complete) minimize sum(decision);
+solve minimize sum(decision);
 
 % Output in the exact format the marking script expects
 output ["decision = \(decision);\n"];
