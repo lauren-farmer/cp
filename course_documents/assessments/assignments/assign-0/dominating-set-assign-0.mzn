@@ -11,7 +11,7 @@ array[1..n] of var 0..1: decision;
 constraint forall(v in 1..n)(
     decision[v] = 1
     \/ exists(e in 1..m where from[e] = v)(decision[to[e]] = 1)
-    \/ exists(e in 1..m where to[e] = v)(decision[from[e]] = 1);
+    \/ exists(e in 1..m where to[e] = v)(decision[from[e]] = 1)
     );
 
 % Objective: minimize size of dominating set
