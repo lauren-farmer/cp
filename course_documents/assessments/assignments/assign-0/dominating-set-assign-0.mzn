@@ -6,11 +6,7 @@ array[1..m] of int: to;      % edge end vertices
 
 % Decision variable: 1 if vertex i is in the dominating set
 array[1..n] of var 0..1: decision;
-
-% A vertex v is dominated if it is in the set or one of its neighbors is
-predicate dominates(int: v) =
     
-
 % Each vertex must be dominated
 constraint forall(v in 1..n)(
     decision[v] = 1
