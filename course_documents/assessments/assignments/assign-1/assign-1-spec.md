@@ -1,5 +1,5 @@
 Assignment 1: MiniZinc model of variable-distance dominating set
-- Due Monday, 20 October 2025, 4:30 PM (UK time)
+- Due Monday, 13 October 2025, 4:30 PM (UK time)
 - Worth 5% of course grade
 - Automatically marked
 - **upload exactly one .mzn file to Moodle and nothing else**
@@ -62,7 +62,7 @@ For example, I will mark with:
 
 ```
 minizinc dist-dominating-set-assign-1.mzn sample-input-file-1.dzn > output.txt
-python3 dist-dom-set-marking.py sample-input-file-1.dzn output.txt
+python3 dist-dom-set-marking.py sample-input-file-1.dzn output.txt 2
 ```
 
 Which should for that input give me 
