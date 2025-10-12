@@ -31,21 +31,28 @@ array[1..n, 1..n] of int: adj =
       endif
     | i in 1..n, j in 1..n ]);
 
-% --- Compute reachability within distance ≤ k ---
-% Floyd-Warshall-style iterative closure for up to distance k
-%
-% Initialize dist_reached to 1 for any pair within distance ≤ k
-% For small graphs this is fine to express directly.
+% --- Initialize base cases for distance 1 ---
 constraint
-  forall(i in 1..n, j in 1..n)(
-    dist_reached[i,j] = 
-      if adj[i,j] = 1 then 1
-      else if k > 1 then
-        % There is a path of length ≤ k if there exists a neighbor mid
-        % that is adjacent to i and dist_reached[mid,j] = 1 for distance k-1
-        max([adj[i,mid] * dist_reached[mid,j] | mid in 1..n]) 
-      else 0
-      endif
+  forall(i,j in 1..n)(
+    dist_reached[i,j] >= adj[i,j]  % Direct connections are always reachable
+  );
+
+% --- Build up distances iteratively ---
+constraint
+  forall(i,j in 1..n)(
+    dist_reached[i,j] = 1 <-  % vertex j is reachable from i if:
+      adj[i,j] = 1 \/         % they're directly connected OR
+      (k > 1 /\              % for k > 1
+        exists(mid in 1..n)(   % there exists an intermediate vertex
+          dist_reached[i,mid] = 1 /\ adj[mid,j] = 1  % that's reachable and connected to j
+        )
+      )
+  );
+
+% --- Ensure symmetry for undirected graph ---
+constraint
+  forall(i,j in 1..n)(
+    dist_reached[i,j] = dist_reached[j,i]
   );
 
 % --- Every vertex must be dominated ---
