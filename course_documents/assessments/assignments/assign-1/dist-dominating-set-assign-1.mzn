@@ -32,35 +32,22 @@ array[1..n, 1..n] of int: adj =
     | i in 1..n, j in 1..n ]);
 
 % --- Initialize base cases for distance 1 ---
-constraint
-  forall(i,j in 1..n)(
-    dist_reached[i,j] >= adj[i,j]  % Direct connections are always reachable
-  );
+%constraint
+  %forall(i,j in 1..n)(dist_reached[i,j] >= adj[i,j]);
 
 % --- Build up distances iteratively ---
 constraint
   forall(i,j in 1..n)(
-    dist_reached[i,j] = 1 <-  % vertex j is reachable from i if:
-      adj[i,j] = 1 \/         % they're directly connected OR
-      (k > 1 /\              % for k > 1
-        exists(mid in 1..n)(   % there exists an intermediate vertex
-          dist_reached[i,mid] = 1 /\ adj[mid,j] = 1  % that's reachable and connected to j
-        )
-      )
+    dist_reached[i,j] = 1 <- adj[i,j] = 1 \/ (k > 1 /\ exists(mid in 1..n)(dist_reached[i,mid] = 1 /\ adj[mid,j] = 1))
   );
 
 % --- Ensure symmetry for undirected graph ---
-constraint
-  forall(i,j in 1..n)(
-    dist_reached[i,j] = dist_reached[j,i]
-  );
+%constraint
+  %forall(i,j in 1..n)(dist_reached[i,j] = dist_reached[j,i]);
 
-% --- Every vertex must be dominated ---
-% Each vertex v must have some selected u within distance ≤ k
+% Every vertex must be dominated, each must have some selected u within distance ≤ k
 constraint
-  forall(v in 1..n)(
-    sum(u in 1..n)(decision[u] * dist_reached[u,v]) >= 1
-  );
+  forall(v in 1..n)(sum(u in 1..n)(decision[u] * dist_reached[u,v]) >= 1);
 
 % --- Objective: minimize the number of selected vertices ---
 solve minimize sum(v in 1..n)(decision[v]);
