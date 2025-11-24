@@ -150,18 +150,18 @@ def skeleton_runs():
     
 #     note that you may not be able to solve instances up to the full sizes - this is meant to be challenging, some students may not manage it
 
-#     for size in [4,6,10]:
-    for size in [3, 5]:
+    for size in [4,6,10]:
+    # for size in [3, 5]:
         path_graph = nx.path_graph(size)
         run_dual_trials(path_graph, result_dict, name_graph = "path_"+str(size))
         
-#     for height in [4, 6, 10]:
-    for height in [4]:
+    for height in [4, 6, 10]:
+    # for height in [4]:
         ladder_graph = generate_ladder_instance(height)
         run_dual_trials(ladder_graph, result_dict, name_graph = "ladder_"+str(height))
     
-#     for dim in [3, 5, 7]:
-    for dim in [3]:
+    for dim in [3, 5, 7]:
+    # for dim in [3]:
         grid_graph = nx.grid_2d_graph(dim, dim)
         run_dual_trials(grid_graph, result_dict, name_graph = "grid_"+str(dim))
     
