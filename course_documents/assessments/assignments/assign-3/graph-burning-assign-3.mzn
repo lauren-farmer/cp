@@ -79,5 +79,4 @@ solve minimize burning_number;
 output [
   "burning_number = ", show(burning_number), "\n",
   "burning_sequence = ", show(burning_sequence), "\n"
-] ++
-show(default_output);
+];
