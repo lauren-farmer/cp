@@ -75,3 +75,8 @@ constraint forall(i in V)(burning_sequence[i] = sum(j in 1..n)(j * decision_2[i,
 
 %Objective: Minimize the burning number
 solve minimize burning_number;
+
+output [
+  "burning_number = ", show(burning_number), "\n",
+  "burning_sequence = ", show(burning_sequence), "\n"
+];
