@@ -79,4 +79,5 @@ solve minimize burning_number;
 output [
   "burning_number = ", show(burning_number), "\n",
   "burning_sequence = ", show(burning_sequence), "\n"
+  show([j | j in 1..n where sum(i in 1..n)(decision_2[i, j]) > 0]), "\n"
 ];
